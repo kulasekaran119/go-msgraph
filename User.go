@@ -53,6 +53,21 @@ func (u User) ListCalendars() (Calendars, error) {
 	return marsh.Calendars, err
 }
 
+func (u User) ListFolders()(Folders, error)  {
+	if u.graphClient == nil {
+		return Folders{}, ErrNotGraphClientSourced
+	}
+
+	resource := fmt.Sprintf("/users/%v/mailFolders", u.ID)
+
+	var marsh struct {
+		Folders Folders `json:"value"`
+	}
+	err := u.graphClient.makeGETAPICall(resource, nil, &marsh)
+	marsh.Folders.setGraphClient(u.graphClient)
+	return marsh.Folders, err
+}
+
 // ListCalendarView returns the CalendarEvents of the given user within the specified
 // start- and endDateTime. The calendar used is the default calendar of the user.
 // Returns an error if the user it not GraphClient sourced or if there is any error
