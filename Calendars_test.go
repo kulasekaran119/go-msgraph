@@ -11,10 +11,10 @@ func GetTestListCalendars(t *testing.T) Calendars {
 	testUser := GetTestUser(t)
 	testCalendars, err := testUser.ListCalendars()
 	if err != nil {
-		t.Fatalf("Can not User.ListCalendars() for user %v: %v", testUser, err)
+		t.Fatalf("Cannot User.ListCalendars() for user %v: %v", testUser, err)
 	}
 	if len(testCalendars) == 0 {
-		t.Fatalf("Can not User.ListCalendars() for user %v, 0 calendars returned", testUser)
+		t.Fatalf("Cannot User.ListCalendars() for user %v, 0 calendars returned", testUser)
 	}
 	return testCalendars
 }
@@ -34,7 +34,7 @@ func TestCalendars_GetByName(t *testing.T) {
 		{
 			name:    "Find valid Calendar",
 			c:       testCalendars,
-			args:    args{name: "Kalender"},
+			args:    args{name: msGraphExistingCalendarsOfUser[0]},
 			wantErr: false,
 		}, {
 			name:    "non-existing calendar",

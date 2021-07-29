@@ -16,25 +16,25 @@ type supportedTimeZones struct {
 }
 
 // GetTimeZoneByAlias searches in the given set of supportedTimeZones for the TimeZone with the given alias. Returns
-// either the time.Location or an error if it can not be found.
+// either the time.Location or an error if it cannot be found.
 func (s supportedTimeZones) GetTimeZoneByAlias(alias string) (*time.Location, error) {
 	for _, searchItem := range s.Value {
 		if searchItem.Alias == alias {
 			return searchItem.TimeLoc, nil
 		}
 	}
-	return nil, fmt.Errorf("Could not find given time.Location for Alias %v", alias)
+	return nil, fmt.Errorf("could not find given time.Location for Alias %v", alias)
 }
 
 // GetTimeZoneByAlias searches in the given set of supportedTimeZones for the TimeZone with the given alias. Returns
-// either the time.Location or an error if it can not be found.
+// either the time.Location or an error if it cannot be found.
 func (s supportedTimeZones) GetTimeZoneByDisplayName(displayName string) (*time.Location, error) {
 	for _, searchItem := range s.Value {
 		if searchItem.DisplayName == displayName {
 			return searchItem.TimeLoc, nil
 		}
 	}
-	return nil, fmt.Errorf("Could not find given time.Location for DisplayName %v", displayName)
+	return nil, fmt.Errorf("could not find given time.Location for DisplayName %v", displayName)
 }
 
 // supportedTimeZone represents one instance grabbed by https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/outlookuser_supportedtimezones
@@ -60,12 +60,12 @@ func (s *supportedTimeZone) UnmarshalJSON(data []byte) error {
 
 	ianaName, ok := WinIANA[s.DisplayName]
 	if !ok {
-		return fmt.Errorf("Can not map %v to IANA", s.DisplayName)
+		return fmt.Errorf("cannot map %v to IANA", s.DisplayName)
 	}
 
 	loc, err := time.LoadLocation(ianaName)
 	if err != nil {
-		return fmt.Errorf("Can not time.LoadLocation for original \"%v\" mapped to IANA \"%v\"", s.DisplayName, ianaName)
+		return fmt.Errorf("cannot time.LoadLocation for original \"%v\" mapped to IANA \"%v\"", s.DisplayName, ianaName)
 	}
 	s.TimeLoc = loc
 
@@ -95,6 +95,7 @@ var WinIANA = map[string]string{
 	"(UTC-07:00) Arizona":                                           "America/Phoenix",
 	"(UTC-07:00) Chihuahua, La Paz, Mazatlan":                       "America/Chihuahua",
 	"(UTC-07:00) Mountain Time (US & Canada)":                       "America/Denver",
+	"(UTC-07:00) Yukon":                                             "Etc/GMT+7",
 	"(UTC-06:00) Central America":                                   "America/Guatemala",
 	"(UTC-06:00) Central Time (US & Canada)":                        "America/Chicago",
 	"(UTC-06:00) Easter Island":                                     "Pacific/Easter",
@@ -153,6 +154,7 @@ var WinIANA = map[string]string{
 	"(UTC+02:00) Istanbul":                                          "Europe/Istanbul",
 	"(UTC+03:00) Istanbul":                                          "Europe/Istanbul",
 	"(UTC+02:00) Jerusalem":                                         "Asia/Jerusalem",
+	"(UTC+02:00) Juba":                                              "Africa/Juba",
 	"(UTC+02:00) Kaliningrad":                                       "Europe/Kaliningrad",
 	"(UTC+02:00) Windhoek":                                          "Africa/Windhoek",
 	"(UTC+02:00) Khartoum":                                          "Africa/Khartoum",
@@ -163,6 +165,7 @@ var WinIANA = map[string]string{
 	"(UTC+03:00) Moscow, St. Petersburg":                            "Europe/Moscow",
 	"(UTC+03:00) Moscow, St. Petersburg, Volgograd":                 "Europe/Moscow",
 	"(UTC+03:00) Nairobi":                                           "Africa/Nairobi",
+	"(UTC+03:00) Volgograd":                                         "Europe/Volgograd",
 	"(UTC+03:30) Tehran":                                            "Asia/Tehran",
 	"(UTC+04:00) Abu Dhabi, Muscat":                                 "Asia/Dubai",
 	"(UTC+04:00) Astrakhan, Ulyanovsk":                              "Europe/Samara",
